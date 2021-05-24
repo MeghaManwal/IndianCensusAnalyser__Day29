@@ -12,6 +12,7 @@ public class StateCodeAnalyser_test {
 	
 	private static final String csvPath ="C:\\Users\\Varsha Manwal\\Desktop\\BridgeLabz\\Fellowship\\Day29_IndianStatesCensusAnalyzer\\StateCensusAnalyser\\Data\\codeFile.csv";
 	private static final String csvWrongPath ="C:\\Users\\Varsha Manwal\\Desktop\\BridgeLabz\\Fellowship\\Day29_IndianStatesCensusAnalyzer\\StateCensusAnalyser\\codeFile.csv";
+	private static final String pdfPath ="C:\\Users\\Varsha Manwal\\Desktop\\BridgeLabz\\Fellowship\\Day29_IndianStatesCensusAnalyzer\\StateCensusAnalyser\\Data\\codeFile.pdf";
 	
 	@Test
 	public void givenCodeCsvFile_returnCorrectRecords() throws IOException, CodeAnalyserException {
@@ -29,6 +30,18 @@ public class StateCodeAnalyser_test {
 			stateCodeAnalyser.LoadIndianCodeData(csvPath);
 		} catch(CodeAnalyserException e) {
 		    assertEquals(CodeAnalyserException.ExceptionType.Csv_File_Problem, e.type);
+		}
+	}
+	
+	@Test
+	public void given_IndiaCodeData_withWrongCsvFile_ShouldThrowException() throws IOException {
+		try {
+			StateCodeAnalyser stateCodeAnalyser = new StateCodeAnalyser();
+			ExpectedException exceptionRule = ExpectedException.none();
+			exceptionRule.expect(CensusAnalyserException.class);
+			stateCodeAnalyser.LoadIndianCodeData(pdfPath);
+		} catch(CodeAnalyserException e) {
+		    assertEquals(CodeAnalyserException.ExceptionType.Unable_To_Parse, e.type);
 		}
 	}
 
