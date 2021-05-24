@@ -26,13 +26,8 @@ public class StateCensusAnalyser {
 				entries++;
 				IndianCensusCSV censusData = censusCSVIterator.next();
 			}
-			System.out.println("Number of Entries in File"+entries);
 			return entries;	
 			
 		}
 		
-		public static void main(String[] args) throws IOException {
-			String csvPath = "C:\\Users\\Varsha Manwal\\Desktop\\BridgeLabz\\Fellowship\\Day29_IndianStatesCensusAnalyzer\\CensusAnalyser\\Data\\censusFile.csv";
-			LoadIndiaCensusData(csvPath);
-		}
 }
