@@ -10,9 +10,13 @@ import com.opencsv.bean.CsvToBeanBuilder;
 
 public class StateCensusAnalyser {
 	
-		public static int LoadIndiaCensusData(String csvPath) throws IOException   {
+	    public String csvPath;
+	    public StateCensusAnalyser() {}
+	
+		public static int LoadIndiaCensusData(String csvPath) throws IOException, CensusAnalyserException   {
 			
 			Reader reader;
+			try {
 				reader = Files.newBufferedReader(Paths.get(csvPath));
 			
 			@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -27,7 +31,10 @@ public class StateCensusAnalyser {
 				IndianCensusCSV censusData = censusCSVIterator.next();
 			}
 			return entries;	
-			
+			} catch (IOException e) {
+				throw new CensusAnalyserException(e.getMessage(),
+	                    CensusAnalyserException.ExceptionType.Csv_File_Problem);
+			}		
 		}
 		
 }
