@@ -27,12 +27,7 @@ public class StateCodeAnalyser {
 			@SuppressWarnings("unused")
 			IndianCodeCSV codeData = codeCSVIterator.next();
 		}
-		System.out.println(entries);
 		return entries;
 	}
 	
-	public static void main(String[] args) throws IOException {
-		String csvPath = "C:\\Users\\Varsha Manwal\\Desktop\\BridgeLabz\\Fellowship\\Day29_IndianStatesCensusAnalyzer\\StateCensusAnalyser\\Data\\codeFile.csv";
-		LoadIndianCodeData(csvPath);
-	}
 }
