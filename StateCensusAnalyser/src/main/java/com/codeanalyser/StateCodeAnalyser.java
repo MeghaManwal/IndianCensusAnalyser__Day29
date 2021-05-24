@@ -1,12 +1,12 @@
 package com.codeanalyser;
 
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Iterator;
-
-import com.censusanalyser.CensusAnalyserException;
+import com.opencsv.CSVReader;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 
@@ -34,7 +34,31 @@ public class StateCodeAnalyser {
 		}catch (IOException e) {
 			throw new CodeAnalyserException(e.getMessage(),
                     CodeAnalyserException.ExceptionType.Csv_File_Problem);
-		}	
+		}catch (IllegalStateException e) {
+			throw new CodeAnalyserException(e.getMessage(),
+					CodeAnalyserException.ExceptionType.Unable_To_Parse);
+	   }	
+	}
+	
+	@SuppressWarnings("deprecation")
+	public boolean LoadIndiaCodeCSVData(String csvPath) throws CodeAnalyserException, IOException {
+		
+		CSVReader reader;
+		try {
+			reader = new CSVReader(new FileReader(csvPath),'|');
+			@SuppressWarnings("unused")
+			String [] nextLine;
+			while((nextLine=reader.readNext()) != null) {
+				return true;
+			}
+			if(reader != null) {
+				reader.close();
+			}
+		}catch(IllegalStateException e) {
+			throw new CodeAnalyserException(e.getMessage(),
+					CodeAnalyserException.ExceptionType.Unable_To_Parse);
+		}
+		return false;
 	}
 	
 }
