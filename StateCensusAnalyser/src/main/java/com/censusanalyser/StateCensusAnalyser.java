@@ -1,10 +1,12 @@
 package com.censusanalyser;
 
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Iterator;
+import com.opencsv.CSVReader;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 
@@ -38,6 +40,27 @@ public class StateCensusAnalyser {
 				throw new CensusAnalyserException(e.getMessage(),
 	                    CensusAnalyserException.ExceptionType. Unable_To_Parse);
 		   }		
+		}
+		
+		@SuppressWarnings("deprecation")
+		public boolean LoadIndiaCensusCSVData(String csvPath) throws CensusAnalyserException, IOException {
+			
+			CSVReader reader;
+			try {
+				reader = new CSVReader(new FileReader(csvPath),'|');
+				@SuppressWarnings("unused")
+				String [] nextLine;
+				while((nextLine=reader.readNext()) != null) {
+					return true;
+				}
+				if(reader != null) {
+					reader.close();
+				}
+			}catch(IllegalStateException e) {
+				throw new CensusAnalyserException(e.getMessage(),
+						 CensusAnalyserException.ExceptionType. Unable_To_Parse);
+			}
+			return false;
 		}
 		
 }
