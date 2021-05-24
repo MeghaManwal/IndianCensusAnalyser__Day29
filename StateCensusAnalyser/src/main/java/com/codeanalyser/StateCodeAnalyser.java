@@ -5,13 +5,16 @@ import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Iterator;
+
+import com.censusanalyser.CensusAnalyserException;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 
 public class StateCodeAnalyser {
 	
-	public static  int LoadIndianCodeData(String csvPath) throws IOException {
+	public static  int LoadIndianCodeData(String csvPath) throws IOException, CodeAnalyserException {
 		Reader reader;
+		try {
 		reader = Files.newBufferedReader(Paths.get(csvPath));
 		
 		@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -28,6 +31,10 @@ public class StateCodeAnalyser {
 			IndianCodeCSV codeData = codeCSVIterator.next();
 		}
 		return entries;
+		}catch (IOException e) {
+			throw new CodeAnalyserException(e.getMessage(),
+                    CodeAnalyserException.ExceptionType.Csv_File_Problem);
+		}	
 	}
 	
 }
